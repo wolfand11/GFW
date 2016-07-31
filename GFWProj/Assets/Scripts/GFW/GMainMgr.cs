@@ -49,13 +49,9 @@ namespace GFW
 		{
 			if (!isInited) {
 				isInited = true;
-				// init self
 				mainMgrGObj_ = GameObject.Find (mainMgrGObjName_);
 				if (mainMgrGObj_ == null) {
-					//TODO: support running don't need GMainMgr
-//					GLogUtility.LogError ("not exist " + mainMgrGObjName_);
-//					GAppUtility.Quit ();
-					return;
+					mainMgrGObj_ = new GameObject (mainMgrGObjName_);
 				}
 				mainMgrGObj_.AddComponent (typeof(GMainMgrMonoBehaviour));
 				GameObject.DontDestroyOnLoad (mainMgrGObj_);
@@ -64,7 +60,6 @@ namespace GFW
 				GSceneMgr.GetInstance ().RegisterScene (GESceneType.kGameScene, "GameScene", typeof(GGameScene));
 				GSceneMgr.GetInstance ().RegisterScene (GESceneType.kMainScene, "MainScene", typeof(GOtherScene));
 				GSceneMgr.GetInstance ().RegisterScene (GESceneType.kLoginScene, "LoginScene", typeof(GOtherScene));
-
 
 				GSceneMgr.GetInstance ().OnLoadSceneCompleted ();
 				GLogUtility.LogInfo ("GMainMgr Init Completed!");
@@ -82,7 +77,6 @@ namespace GFW
 			{
 				Scene scene = SceneManager.GetActiveScene ();
 				GLogUtility.LogInfo ("OnLevelWasLoaded name = " + scene.name);
-
 
 				GSceneMgr.GetInstance ().OnLoadSceneCompleted ();
 			}

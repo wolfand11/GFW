@@ -72,6 +72,11 @@ namespace GFW
 
 		void UnloadScene_ (string sceneName)
 		{
+			var sceneObj = GameObject.Find (GetSceneRootObjName ()) as GameObject;
+			if (sceneObj) {
+				GameObject.Destroy (sceneObj);
+			}
+
 			#if UNITY_EDITOR
 			// do nothing
 			#else
@@ -163,6 +168,11 @@ namespace GFW
 		private const string uiCanvasName_ = "Canvas";
 		private const string sceneRootName_ = "__Scene__";
 
+		public static string GetSceneRootObjName ()
+		{
+			return sceneRootName_;
+		}
+
 		string GetViewRootName (GViewType type)
 		{
 			switch (type) {
@@ -193,7 +203,7 @@ namespace GFW
 				InitView_ (type);
 			}
 
-			InitScript_ ();
+			InitSceneObj_ ();
 		}
 
 		void InitCanvas ()
@@ -217,17 +227,16 @@ namespace GFW
 			}
 		}
 
-		void InitScript_ ()
+		void InitSceneObj_ ()
 		{
-			var canvas = GameObject.Find (uiCanvasName_);
-			if (canvas != null) {
-				var gObj = new GameObject (); 
-				gObj.transform.SetParent (canvas.transform.root);
-				gObj.name = sceneRootName_;
-				gObj.AddComponent (sceneInfoMap_ [curScene_].sceneMgrType);
-			} else {
-				GLogUtility.LogError ("dont exist Canvas. scene name = "
-				+ SceneManager.GetActiveScene ().name);
+			var sceneObj = GameObject.Find (sceneRootName_);
+			if (sceneObj == null) {
+				sceneObj = new GameObject (sceneRootName_);
+				GameObject.DontDestroyOnLoad (sceneObj);
+			}
+			var comp = sceneObj.GetComponent (sceneInfoMap_ [curScene_].sceneMgrType);
+			if (comp == null) {
+				sceneObj.AddComponent (sceneInfoMap_ [curScene_].sceneMgrType);
 			}
 		}
 
