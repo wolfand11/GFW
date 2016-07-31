@@ -1,0 +1,80 @@
+#+TITLE: GFramework for Unity developer
+#+OPTIONS: ^:{}
+#+OPTIONS: \n:t 
+#+HTML_HEAD: <link rel="stylesheet" href="http://orgmode.org/org-manual.css" type="text/css" />
+Tips: 下载 htlm 格式文件直接在浏览器中打开，可以查看格式优化过的文档。
+* 简介
+GFramework for Unity developer, 简称 GFW
+* 设计宗旨
+这是一个精练的框架，该框架的设计宗旨是加速 Unity 开发。目前采用了以下的方法来实现设计宗旨：
+***** 充分利用 Unity 便捷的开发功能。例如，框架不会禁用脚本变量绑定，这样的功能可以有效提高开发效率。
+***** 有效分解开发参与者工作的耦合。例如，框架规定所有 UI 面板都制作为 Prefabs 放置在 Resource/UI/下。不同 UI 面板可以由不同人制作。
+***** 框架需要保持简单易用。例如，框架采用扁平结构即大部分模块的功能以单例或者静态类的形式提供。
+。。。。（后续想到再补充）
+* 模块
+** 当前包含模块
+*** Mgr
+| 模块名称                          | 介绍                                             |
+|-----------------------------------+--------------------------------------------------|
+| GMainMgr                          | 总的管理者，会负责框架的初始化、全局的消息处理。 |
+| GSceneMgr                         | 场景管理者，负责 Scene 的管理逻辑                |
+| GViewMgr/GUIViewMgr/GModalViewMgr | UI 管理者，负责 UI 的管理逻辑                    |
+*** Utility
+| Utility 模块名称 | 介绍                                   |
+|------------------+----------------------------------------|
+| GFileUtility     | 文件操作工具                           |
+| GLogUtility      | 日志工具，支持日志分级，以及导出到文件 |
+| GCoordUtility    | 坐标处理相关的工具                     |
+| GTimeUtility     | 时间相关工具                           |
+| GAppUtility      | Application 工具                    |
+| GUtility         | 通用工具                               |
+
+Tips: GUtility 目前很不稳定，其中的方法后面可能会放到新的独立文件中。
+*** UI 控件
+| UI 控件模块         | 介绍       |
+|--------------------+------------|
+| GMovingImage       | 滚动的图片 |
+Tips: 本框架 UI 基于 uGUI
+*** 编辑器
+| 编辑器模块         | 介绍                                    |
+|--------------------+-----------------------------------------|
+| GEditorMovingImage | 对应于 GMovingImage,用于通过编辑器创建 UI |
+| GEditorUIMenu      | 编辑器菜单功能                          |
+| GEditorUtility     | 编辑器工具                                   |
+
+** 待开发模块
+按照目前碰到的需求添加
+* 使用方法
+**** UI 资源
+每个 UI 面板都放置在 Resource/UI 下面，可以在该路径下再分文件夹，也可以按照一定命名规则来区分不同模块的 UI。建议 ui 名称采用拼音，方便英语水平低的同事参与 UI 制作。
+UI 面板中元素的命名按照 DefaultName_xxxx，例如：Button_kaishi,Button_guanbi 等等(这样方便后续程序自动化处理)。
+**** GFW 会自动生成游戏对象到场景中，所有自动生成的对象名称规则为__XXX__。下面的结构就是当前框架所生成的：
+#+BEGIN_EXAMPLE
+// Canvas
+// - __UIView__
+// --  __UIView_1__
+// --  __UIView_2__
+// --  __UIView_3__
+// - __ModalView__
+// --  __ModalView_1__
+// --  __ModalView_2__
+// --  __ModalView_3__
+// __MainMgr__
+#+END_EXAMPLE
+**** 框架的入口为 GMainMgr 中的 Init_
+该静态函数添加了[RuntimeInitializeOnLoadMethod],所以场景加载后会执行该方法。需要注意的是，如果你自己的其他类需要在开始的时候进行初始化，那么需要将你的初始化放置在 Init_中，不要在使用[RuntimeInitializeOnLoadMethod]来触发你的初始化方法。因为不同文件中的被标记为 RuntimeInitializeOnLoadMethod 的方法触发顺序是确定的。
+**** 新添加场景需要为其添加对应枚举，并注册。
+枚举的添加在 GMainMgr 中的 GESceneType 中。
+Tips:
+这个机制后面会优化掉，场景很多时枚举定义也不太方便，需要支持通过加载配置文件来注册。这个过程最好自动化掉。
+**** 场景的切换
+#+BEGIN_SRC c#
+GSceneMgr.GetInstance ().ChangeToScene(sceneType);
+GSceneMgr.GetInstance ().ChangeToNextScene ();
+#+END_SRC
+**** UI 的切换
+UI 管理采用分层栈式结构，GViewZOrder 定义了 UI 的层，Push、Pop 是对 UI 栈的操作。框架默认提供了 3 个层次，如有需要只需按顺序添加新的枚举即可，框架支持层次扩展。
+#+BEGIN_SRC c#
+GUIViewMgr.GetInstance ().PushView (CreateBg);
+GUIViewMgr.GetInstance ().PushView (GGameStartView.CreateView, GViewZOrder.kZOrder2);
+#+END_SRC
