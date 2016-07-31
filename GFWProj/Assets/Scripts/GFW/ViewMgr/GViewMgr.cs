@@ -8,9 +8,10 @@ namespace GFW
 {
 	public enum GViewZOrder
 	{
+		kZOrderMinInvalid = -2,
+		kZOrder_1,
+		kZOrder0,
 		kZOrder1,
-		kZOrder2,
-		kZOrder3,
 		kZOrderMaxInvalid
 	}
 
@@ -110,7 +111,7 @@ namespace GFW
 			set{ curViewGroup = value; }
 		}
 
-		public GameObject PushView (GFuncViewCreator createFunc, GViewZOrder zOrder = GViewZOrder.kZOrder1)
+		public GameObject PushView (GFuncViewCreator createFunc, GViewZOrder zOrder = GViewZOrder.kZOrder0)
 		{
 			if (curViewGroup != null) {
 				return curViewGroup.ViewStackMap [zOrder].PushView (createFunc);
@@ -120,7 +121,7 @@ namespace GFW
 			}
 		}
 
-		public void PopView (GViewZOrder zOrder = GViewZOrder.kZOrder1)
+		public void PopView (GViewZOrder zOrder = GViewZOrder.kZOrder0)
 		{
 			if (curViewGroup != null) {
 				curViewGroup.ViewStackMap [zOrder].PopView ();
@@ -129,7 +130,7 @@ namespace GFW
 			}
 		}
 
-		public void EmptyStack (GViewZOrder zOrder = GViewZOrder.kZOrder1)
+		public void EmptyStack (GViewZOrder zOrder = GViewZOrder.kZOrder0)
 		{
 			if (curViewGroup != null) {
 				curViewGroup.ViewStackMap [zOrder].EmptyStack ();

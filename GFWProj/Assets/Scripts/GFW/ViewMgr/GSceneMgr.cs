@@ -217,8 +217,10 @@ namespace GFW
 			if (canvas != null) {
 				var viewRootName = GetViewRootName (type);
 				var viewRoot = GCoordUtility.CreateFullScreenUINode (canvas.gameObject, viewRootName);
-				foreach (GViewZOrder zOrder in (GViewZOrder[])GViewZOrder.GetValues(typeof(GViewZOrder))) {
-					string name = GetSubViewRootName (type, zOrder);
+				for (int zOrder = (int)GViewZOrder.kZOrderMinInvalid + 1; 
+					zOrder < (int)GViewZOrder.kZOrderMaxInvalid;
+					zOrder++) {
+					string name = GetSubViewRootName (type, (GViewZOrder)zOrder);
 					GCoordUtility.CreateFullScreenUINode (viewRoot, name);
 				}
 			} else {
@@ -240,7 +242,7 @@ namespace GFW
 			}
 		}
 
-		public GameObject GetViewRoot (GViewType type, GViewZOrder zOrder = GViewZOrder.kZOrder1)
+		public GameObject GetViewRoot (GViewType type, GViewZOrder zOrder = GViewZOrder.kZOrder0)
 		{
 			var canvas = GameObject.Find (uiCanvasName_);
 			if (canvas != null) {

@@ -9,27 +9,18 @@ public class GGameStartView : MonoBehaviour
 	public Button btnStart;
 	public Button btnChangeScene;
 	public Image imgTitle;
-	public Image imgTutorial;
 
-	public delegate void GEventStart ();
-
-	public event GEventStart eventStart;
 	// Use this for initialization
 	void Start ()
 	{
-		startRoot.SetActive (true);
-		imgTutorial.gameObject.SetActive (false);
-
 		btnStart.onClick.AddListener (OnPressedStart);
 		btnChangeScene.onClick.AddListener (OnPressedChangeScene);
 	}
 
 	void OnPressedStart ()
 	{
-		startRoot.SetActive (false);
-		imgTutorial.gameObject.SetActive (true);
-
-		eventStart ();
+		GUIViewMgr.GetInstance ().PopView ();
+		GGameModal.GetInstance ().CurState = GGameModal.GEGameState.kToturial;
 	}
 
 	void OnPressedChangeScene ()
