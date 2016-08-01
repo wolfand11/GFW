@@ -47,6 +47,12 @@ namespace GFW
 		[RuntimeInitializeOnLoadMethod]
 		static void Init_ ()
 		{
+			Scene scene = SceneManager.GetActiveScene ();
+			GLogUtility.LogInfo ("GMainMgr.Init_ scene = " + scene.name);
+			if (scene.name.EndsWith ("_Editor")) {
+				return;
+			}
+
 			if (!isInited) {
 				isInited = true;
 				mainMgrGObj_ = GameObject.Find (mainMgrGObjName_);

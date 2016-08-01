@@ -21,6 +21,7 @@ public class GGameStartView : MonoBehaviour
 	{
 		GUIViewMgr.GetInstance ().PopView ();
 		GGameModal.GetInstance ().CurState = GGameModal.GEGameState.kToturial;
+		GEventMgr.GetInstance ().TriggerEvent ((int)GEventType.kEvent_PressStart);
 	}
 
 	void OnPressedChangeScene ()
