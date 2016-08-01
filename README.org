@@ -19,6 +19,7 @@ GFramework for Unity developer, 简称 GFW
 | GMainMgr                          | 总的管理者，会负责框架的初始化、全局的消息处理。 |
 | GSceneMgr                         | 场景管理者，负责 Scene 的管理逻辑                |
 | GViewMgr/GUIViewMgr/GModalViewMgr | UI 管理者，负责 UI 的管理逻辑                    |
+| GEventMgr                         | 观察者模式实现，负责消息传递                                   |
 *** Utility
 | Utility 模块名称 | 介绍                                   |
 |------------------+----------------------------------------|
