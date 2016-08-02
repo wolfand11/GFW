@@ -111,8 +111,13 @@ namespace GFW
 		public void ChangeToScene (GESceneType sceneType, bool checkSameScene = false)
 		{
 			if (IsSceneValid (sceneType)) {
-				if (checkSameScene && sceneType != curScene_) {
+				if (checkSameScene && sceneType == curScene_) {
 					return;
+				}
+
+				if (sceneType == curScene_) {
+					GModalViewMgr.GetInstance ().EmptyAllStack ();
+					GUIViewMgr.GetInstance ().EmptyAllStack ();
 				}
 
 				var sceneName = GetSceneName (curScene_);
@@ -217,10 +222,10 @@ namespace GFW
 			if (canvas != null) {
 				var viewRootName = GetViewRootName (type);
 				var viewRoot = GCoordUtility.CreateFullScreenUINode (canvas.gameObject, viewRootName);
-				for (int zOrder = (int)GViewZOrder.kZOrderMinInvalid + 1; 
-					zOrder < (int)GViewZOrder.kZOrderMaxInvalid;
-					zOrder++) {
-					string name = GetSubViewRootName (type, (GViewZOrder)zOrder);
+				var zOrderEnums = GViewZOrder.GetValues (typeof(GViewZOrder));
+				Array.Sort (zOrderEnums);
+				foreach (GViewZOrder zOrder in zOrderEnums) {
+					string name = GetSubViewRootName (type, zOrder);
 					GCoordUtility.CreateFullScreenUINode (viewRoot, name);
 				}
 			} else {

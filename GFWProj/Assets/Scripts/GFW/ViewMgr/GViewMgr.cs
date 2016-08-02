@@ -8,11 +8,9 @@ namespace GFW
 {
 	public enum GViewZOrder
 	{
-		kZOrderMinInvalid = -2,
 		kZOrder_1,
 		kZOrder0,
 		kZOrder1,
-		kZOrderMaxInvalid
 	}
 
 	public enum GViewType
@@ -45,7 +43,9 @@ namespace GFW
 				GUtility.RemoveAllChildren (viewRoot);
 
 				var view = createFunc ();
+				GLogUtility.LogDebug ("view name = " + view.name);
 				view.transform.SetParent (viewRoot.transform);
+
 				GCoordUtility.ResetRectToFullScreenAndInMiddle (view.GetComponent<RectTransform> ());
 
 				viewStack_.Add (createFunc);
@@ -134,6 +134,17 @@ namespace GFW
 		{
 			if (curViewGroup != null) {
 				curViewGroup.ViewStackMap [zOrder].EmptyStack ();
+			} else {
+				GLogUtility.LogError ("curViewGroup == null");
+			}
+		}
+
+		public void EmptyAllStack ()
+		{
+			if (curViewGroup != null) {
+				foreach (var kv in curViewGroup.ViewStackMap) {
+					kv.Value.EmptyStack ();	
+				}
 			} else {
 				GLogUtility.LogError ("curViewGroup == null");
 			}
