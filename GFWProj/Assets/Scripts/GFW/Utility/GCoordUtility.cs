@@ -44,6 +44,18 @@ namespace GFW
 			}
 		}
 
+		public static void ResetRectToZero (RectTransform rectTransform)
+		{
+			if (rectTransform != null) {
+				rectTransform.localScale = Vector3.one;
+				rectTransform.pivot = Vector2.zero;
+				rectTransform.anchorMin = Vector2.zero;
+				rectTransform.anchorMax = Vector2.zero;
+				rectTransform.sizeDelta = Vector2.zero;
+				rectTransform.localPosition = Vector3.zero;
+			}
+		}
+
 		public static void ResetRectToFullScreenAndInMiddle (RectTransform rectTransform)
 		{
 			if (rectTransform != null) {
