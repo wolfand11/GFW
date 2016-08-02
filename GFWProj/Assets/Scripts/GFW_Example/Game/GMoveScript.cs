@@ -13,11 +13,25 @@ public class GMoveScript : MonoBehaviour
 
 	public enum GEMoveType
 	{
-		kSpeed,
-		kForce
+		kRigidbodySpeed,
+		kRigidbodyForce,
+		kNormalSpeed
 	}
 
 	public GEMoveType moveType;
+	[SerializeField]
+	private bool isEnableMove = true;
+
+	public bool IsEnableMove {
+		get{ return isEnableMove; }
+		set {
+			isEnableMove = value;
+
+			if (moveType != GEMoveType.kNormalSpeed) {
+				GetComponent<Rigidbody2D> ().isKinematic = true;
+			}
+		}
+	}
 
 	[SerializeField]
 	private float forceOrSpeed_ = 0.0f;
@@ -35,12 +49,14 @@ public class GMoveScript : MonoBehaviour
 				tempForceOrSpeed_.x = 0;
 				tempForceOrSpeed_.y = forceOrSpeed_;
 			}
-
-			if (moveType == GEMoveType.kSpeed) {
-				GetComponent<Rigidbody2D> ().velocity = tempForceOrSpeed_;
-			} else {
-				GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
-				GetComponent<Rigidbody2D> ().AddForce (tempForceOrSpeed_);
+				
+			if (IsEnableMove) {
+				if (moveType == GEMoveType.kRigidbodySpeed) {
+					GetComponent<Rigidbody2D> ().velocity = tempForceOrSpeed_;	
+				} else if (moveType == GEMoveType.kRigidbodyForce) {
+					GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
+					GetComponent<Rigidbody2D> ().AddForce (tempForceOrSpeed_);
+				}
 			}
 		}
 	}
@@ -48,5 +64,20 @@ public class GMoveScript : MonoBehaviour
 	void OnValidate ()
 	{
 		CurForceOrSpeed = forceOrSpeed_;
+		IsEnableMove = isEnableMove;
+	}
+
+	Vector3 deltaPosV3 = Vector3.zero;
+
+	void Update ()
+	{
+		if (IsEnableMove && moveType == GEMoveType.kNormalSpeed) {
+			if (moveDir == GEMoveDir.kHorizontal) {
+				deltaPosV3.x = Time.deltaTime * forceOrSpeed_;
+			} else if (moveDir == GEMoveDir.kVertical) {
+				deltaPosV3.y = Time.deltaTime * forceOrSpeed_;
+			}	
+			transform.localPosition += deltaPosV3;
+		}
 	}
 }

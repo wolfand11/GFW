@@ -18,11 +18,12 @@ public class GGameResultView : MonoBehaviour
 
 	void OnPressedPlayAgain ()
 	{
-		GLogUtility.LogInfo ("OnPressedPlayAgain!");
+		GGameModal.GetInstance ().CurState = GGameModal.GEGameState.kWaitStart;
+		GSceneMgr.GetInstance ().ChangeToScene (GESceneType.kGameScene);
 	}
 
 	public static GameObject CreateView ()
 	{
-		return Resources.Load ("UI/Root_gameResult.prefab") as GameObject;
+		return GameObject.Instantiate (Resources.Load ("UI/Root_gameResult") as GameObject);
 	}
 }
