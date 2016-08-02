@@ -3,10 +3,6 @@
 #+OPTIONS: \n:t 
 #+HTML_HEAD: <link rel="stylesheet" href="http://orgmode.org/org-manual.css" type="text/css" />
 Tips: 下载 htlm 格式文件直接在浏览器中打开，可以查看格式优化过的文档。
-#+BEGIN_EXAMPLE
-小广告 ^_^ ：
-目前我正在求职，我的信息在 https://github.com/wolfand11/AboutMe
-#+END_EXAMPLE
 * 简介
 GameFramework for Unity developer, 简称 GFramework 或 GFW
 * 设计宗旨
@@ -101,3 +97,6 @@ UI 管理采用分层栈式结构，GViewZOrder 定义了 UI 的层，Push、Pop
 GUIViewMgr.GetInstance ().PushView (CreateBg);
 GUIViewMgr.GetInstance ().PushView (GGameStartView.CreateView, GViewZOrder.kZOrder2);
 #+END_SRC
+* 关于我
+目前我正在求职。[[https://github.com/wolfand11/AboutMe][点击了解详情]]
+https://github.com/wolfand11/AboutMe
