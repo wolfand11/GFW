@@ -4,7 +4,7 @@
 #+HTML_HEAD: <link rel="stylesheet" href="http://orgmode.org/org-manual.css" type="text/css" />
 Tips: 下载 htlm 格式文件直接在浏览器中打开，可以查看格式优化过的文档。
 * 简介
-GFramework for Unity developer, 简称 GFW
+GameFramework for Unity developer, 简称 GFramework 或 GFW
 * 设计宗旨
 这是一个精练的框架，该框架的设计宗旨是加速 Unity 开发。目前采用了以下的方法来实现设计宗旨：
 ***** 充分利用 Unity 便捷的开发功能。
