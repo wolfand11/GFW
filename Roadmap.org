@@ -4,17 +4,21 @@
 #+HTML_HEAD: <link rel="stylesheet" href="http://orgmode.org/org-manual.css" type="text/css" />
 * 简介
 Roadmap 记录一下开发过程，关键是能进行需求收集记录。
-Tips: 下载 htlm 格式文件直接在浏览器中打开，可以看到完整信息（github 显示不出来任务的状态。。。。）。
+Tips: 
+下载 htlm 格式文件直接在浏览器中打开，可以看到完整信息（github 显示不出来任务的状态。。。。）。
 * 需求
 ** UI
-***** DONE ui 面板间触摸事件隔离
-CLOSED: [2016-08-03 Wed 10:35]
 ***** TODO ui 贴图打包
 ***** TODO ui 元素脚本绑定自动化
 ***** TODO 可复用 List 控件实现，计划把 cocos 中的 TableView 控件移植过来
+***** 已完成
+****** DONE ui 面板间触摸事件隔离
+CLOSED: [2016-08-03 Wed 10:35]
 ** Logic
 ***** NEXT 实现 scheduler
 ***** TODO lua 或者 js 集成
+***** 已完成 
+
 ** Animation
 ** Effect
 ** AI
