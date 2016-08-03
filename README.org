@@ -35,7 +35,7 @@ Roadmap.org 中会记录下一步开发计划。
 | 模块名称                          | 介绍                                             |
 |-----------------------------------+--------------------------------------------------|
 | GMainMgr                          | 总的管理者，会负责框架的初始化、全局的消息处理。 |
-| GSceneMgr                         | 场景管理者，负责 Scene 的管理逻辑                |
+| GSceneMgr/GSceneBase              | 场景管理者，负责 Scene 的管理逻辑.GSceneBase 声明一些消息用于框架调用 |
 | GViewMgr/GUIViewMgr/GModalViewMgr | UI 管理者，负责 UI 的管理逻辑                    |
 | GEventMgr                         | 观察者模式实现，负责消息传递                                   |
 *** Utility
@@ -83,8 +83,9 @@ UI 面板中元素的命名按照 DefaultName_xxxx，例如：Button_kaishi,Butt
 #+END_EXAMPLE
 **** 框架的入口为 GMainMgr 中的 Init_
 该静态函数添加了[RuntimeInitializeOnLoadMethod],所以场景加载后会执行该方法。需要注意的是，如果你自己的其他类需要在开始的时候进行初始化，那么需要将你的初始化放置在 Init_中，不要在使用[RuntimeInitializeOnLoadMethod]来触发你的初始化方法。因为不同文件中的被标记为 RuntimeInitializeOnLoadMethod 的方法触发顺序是确定的。
-**** 新添加场景需要为其添加对应枚举，并注册。
-枚举的添加在 GMainMgr 中的 GESceneType 中。
+**** 新添加场景。
+新添加场景需要为其添加对应枚举，并注册。枚举的添加在 GMainMgr 中的 GESceneType 中。
+新场景的脚本需要继承自 GSceneBase，框架切换完场景后，会调用 GSceneBase.OnGStart(bool isFirst).isFirst 用来标识是否是第一次进入该场景。
 Tips:
 这个机制后面会优化掉，场景很多时枚举定义也不太方便，需要支持通过加载配置文件来注册。这个过程最好自动化掉。
 方案 1：写一个脚本为场景名称末尾不含_Editor 的场景自动生成 GESceneType 枚举。
