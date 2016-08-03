@@ -90,23 +90,26 @@ namespace GFW
 			SceneManager.LoadScene (sceneName);
 		}
 
-		public void OnLoadSceneCompleted (bool isFirst)
+		public void OnLoadSceneCompleted ()
 		{
+			bool isFirst = false;
 			string sceneName = SceneManager.GetActiveScene ().name;
 			if (curScene_ == GESceneType.kMinInvalidScene ||
 			    curScene_ == GESceneType.kMaxInvalidScene) {
 				curScene_ = GetSceneType (sceneName);
+				isFirst = true;
 			} else {
-				curScene_ = curLoadingScene_;
-
+				// reload scene should be first enter
 				isFirst = curScene_ == curLoadingScene_;
+
+				curScene_ = curLoadingScene_;
 			}
 			if (IsSceneValid (curScene_)) {
 				GModalViewMgr.GetInstance ().CurViewGroup = sceneInfoMap_ [curScene_].modalViewGroup;
 				GUIViewMgr.GetInstance ().CurViewGroup = sceneInfoMap_ [curScene_].uiViewGroup;
 				InitScene_ (isFirst);
 				if (!isFirst) {
-					GModalViewMgr.GetInstance ().ShowAllTopView ();
+					GUIViewMgr.GetInstance ().ShowAllTopView ();
 					GModalViewMgr.GetInstance ().ShowAllTopView ();
 				}
 			} else {

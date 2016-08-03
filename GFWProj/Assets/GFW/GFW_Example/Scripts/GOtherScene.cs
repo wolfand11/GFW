@@ -7,10 +7,8 @@ public class GOtherScene : GSceneBase
 {
 	public override void OnGStart (bool isFirst)
 	{
-		if (isFirst) {
-			var btnChangeScene = GameObject.Find ("Button_changeScene").GetComponent<Button> ();
-			btnChangeScene.onClick.AddListener (OnPressedChangeScene);
-		}
+		var btnChangeScene = GameObject.Find ("Button_changeScene").GetComponent<Button> ();
+		btnChangeScene.onClick.AddListener (OnPressedChangeScene);
 	}
 
 	void OnPressedChangeScene ()
