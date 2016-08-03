@@ -224,9 +224,10 @@ namespace GFW
 				var viewRoot = GCoordUtility.CreateFullScreenUINode (canvas.gameObject, viewRootName);
 				var zOrderEnums = GViewZOrder.GetValues (typeof(GViewZOrder));
 				Array.Sort (zOrderEnums);
+				GameObject subView = null;
 				foreach (GViewZOrder zOrder in zOrderEnums) {
 					string name = GetSubViewRootName (type, zOrder);
-					GCoordUtility.CreateFullScreenUINode (viewRoot, name);
+					subView = GCoordUtility.CreateFullScreenUINode (viewRoot, name);
 				}
 			} else {
 				GLogUtility.LogError ("dont exist Canvas. scene name = "

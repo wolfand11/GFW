@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -36,15 +37,26 @@ namespace GFW
 			this.viewType_ = viewType;
 		}
 
+		string wrapperNodeName = "__wrapper__";
+
+		protected GameObject CreateWrapperNode (GameObject viewRoot)
+		{
+			var wrapper = GCoordUtility.CreateFullScreenUINode (viewRoot, wrapperNodeName);
+			var imageComp = wrapper.AddComponent<Image> ();
+			imageComp.color = new Color (0, 0, 0, 0);
+			wrapper.transform.SetParent (viewRoot.transform);
+			return wrapper;
+		}
+
 		public GameObject PushView (GFuncViewCreator createFunc)
 		{
 			if (createFunc != null) {
 				var viewRoot = GSceneMgr.GetInstance ().GetViewRoot (viewType_, zOrder_);
 				GUtility.RemoveAllChildren (viewRoot);
-
+				var wrapper = CreateWrapperNode (viewRoot);
 				var view = createFunc ();
 				GLogUtility.LogDebug ("view name = " + view.name);
-				view.transform.SetParent (viewRoot.transform);
+				view.transform.SetParent (wrapper.transform);
 
 				GCoordUtility.ResetRectToFullScreenAndInMiddle (view.GetComponent<RectTransform> ());
 
