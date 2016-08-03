@@ -249,7 +249,7 @@ namespace GFW
 			}
 			var comp = sceneObj.GetComponent (sceneInfoMap_ [curScene_].sceneMgrType);
 			if (comp == null) {
-				sceneObj.AddComponent (sceneInfoMap_ [curScene_].sceneMgrType);
+				comp = sceneObj.AddComponent (sceneInfoMap_ [curScene_].sceneMgrType);
 			}
 			((GSceneBase)comp).OnGStart (isFirst);
 		}

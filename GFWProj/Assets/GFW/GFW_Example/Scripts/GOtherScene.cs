@@ -9,7 +9,7 @@ public class GOtherScene : GSceneBase
 	{
 		if (isFirst) {
 			var btnChangeScene = GameObject.Find ("Button_changeScene").GetComponent<Button> ();
-			btnChangeScene.onClick.AddListener (OnPressedChangeScene);	
+			btnChangeScene.onClick.AddListener (OnPressedChangeScene);
 		}
 	}
 
