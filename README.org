@@ -23,10 +23,12 @@ Tips: 后续考虑添加变量自动绑定的功能，指定一个规则，游�
 关于多分辨率的支持，采用了 uGUI 所支持的方案，CanvasScaler 设置为 ScaleWithScreenSize，ReferenceResolution 设置为 UI 设计时采用的分辨率（目前主流机器分辨率）。
 *** 关于框架结构
 框架采用扁平结构即大部分模块的功能以单例或者静态类的形式提供，这样可以保持自身的简单易用。
-
 *** 关于项目结构
 游戏开发的工作是比较繁多的，有效的分解游戏逻辑模块，可以让游戏开发工作并行执行。GFW 自带的 example 中，对游戏逻辑进行的分解如下，GXXXXScene 用来处理场景的初始化，GXXXXView 用来处理指定 UI 面板的逻辑，GXXXXModal 中处理数据相关的逻辑。不同模块间的通信通过 GEventMgr 来进行。
 通常在开发过程中，不同的开发人员人可以开发不同的 GXXXXScene、GXXXXView、GXXXXModal。
+
+** 后续开发计划
+Roadmap.org 中会记录下一步开发计划。
 * 模块
 ** 当前包含模块
 *** Mgr
