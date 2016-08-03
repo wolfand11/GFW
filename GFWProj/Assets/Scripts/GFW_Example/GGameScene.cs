@@ -2,15 +2,16 @@
 using System.Collections;
 using GFW;
 
-public class GGameScene : MonoBehaviour
+public class GGameScene : GSceneBase
 {
 	// Use this for initialization
-	void Start ()
+	public override void OnGStart (bool isFirst)
 	{
-		GGameModal.GetInstance ().CurState = GGameModal.GEGameState.kWaitStart;
-
-		GUIViewMgr.GetInstance ().PushView (GGameView.CreateView, GViewZOrder.kZOrder_1);
-		GUIViewMgr.GetInstance ().PushView (GGameStartView.CreateView);
+		if (isFirst) {
+			GGameModal.GetInstance ().CurState = GGameModal.GEGameState.kWaitStart;
+			GUIViewMgr.GetInstance ().PushView (GGameView.CreateView, GViewZOrder.kZOrderMinus1);
+			GUIViewMgr.GetInstance ().PushView (GGameStartView.CreateView);
+		}
 	}
 }
 

@@ -67,7 +67,7 @@ namespace GFW
 				GSceneMgr.GetInstance ().RegisterScene (GESceneType.kMainScene, "MainScene", typeof(GOtherScene));
 				GSceneMgr.GetInstance ().RegisterScene (GESceneType.kLoginScene, "LoginScene", typeof(GOtherScene));
 
-				GSceneMgr.GetInstance ().OnLoadSceneCompleted ();
+				GSceneMgr.GetInstance ().OnLoadSceneCompleted (true);
 				GLogUtility.LogInfo ("GMainMgr Init Completed!");
 			}
 		}
@@ -84,7 +84,7 @@ namespace GFW
 				Scene scene = SceneManager.GetActiveScene ();
 				GLogUtility.LogInfo ("OnLevelWasLoaded name = " + scene.name);
 
-				GSceneMgr.GetInstance ().OnLoadSceneCompleted ();
+				GSceneMgr.GetInstance ().OnLoadSceneCompleted (false);
 			}
 		}
 	}

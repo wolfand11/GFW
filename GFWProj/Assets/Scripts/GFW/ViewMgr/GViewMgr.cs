@@ -9,7 +9,7 @@ namespace GFW
 {
 	public enum GViewZOrder
 	{
-		kZOrder_1,
+		kZOrderMinus1,
 		kZOrder0,
 		kZOrder1,
 	}
@@ -66,6 +66,23 @@ namespace GFW
 			return null;
 		}
 
+		public void ShowTopView ()
+		{
+			GFuncViewCreator createFunc = null;
+			if (viewStack_.Count > 0) {
+				createFunc = viewStack_ [viewStack_.Count - 1];
+			}
+			var viewRoot = GSceneMgr.GetInstance ().GetViewRoot (viewType_, zOrder_);
+			GUtility.RemoveAllChildren (viewRoot);
+			if (createFunc != null) {
+				var wrapper = CreateWrapperNode (viewRoot);
+				var view = createFunc ();
+				view.transform.SetParent (wrapper.transform);
+
+				GCoordUtility.ResetRectToFullScreenAndInMiddle (view.GetComponent<RectTransform> ());
+			}
+		}
+
 		public void PopView ()
 		{
 			GFuncViewCreator createFunc = null;
@@ -75,8 +92,10 @@ namespace GFW
 			var viewRoot = GSceneMgr.GetInstance ().GetViewRoot (viewType_, zOrder_);
 			GUtility.RemoveAllChildren (viewRoot);
 			if (createFunc != null) {
+				var wrapper = CreateWrapperNode (viewRoot);
 				var view = createFunc ();
-				view.transform.SetParent (viewRoot.transform);
+				view.transform.SetParent (wrapper.transform);
+
 				GCoordUtility.ResetRectToFullScreenAndInMiddle (view.GetComponent<RectTransform> ());
 			}
 			if (viewStack_.Count > 0) {
@@ -130,6 +149,17 @@ namespace GFW
 			} else {
 				GLogUtility.LogError ("curViewGroup == null");
 				return null;
+			}
+		}
+
+		public void ShowAllTopView ()
+		{
+			if (curViewGroup != null) {
+				foreach (var kv in curViewGroup.ViewStackMap) {
+					kv.Value.ShowTopView ();
+				}
+			} else {
+				GLogUtility.LogError ("curViewGroup == null");
 			}
 		}
 

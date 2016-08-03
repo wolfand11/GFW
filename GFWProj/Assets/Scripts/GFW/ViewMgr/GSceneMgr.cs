@@ -12,7 +12,7 @@ namespace GFW
 	{
 		#region SceneMgr
 
-		private GESceneType curLoadingScene_;
+		private GESceneType curLoadingScene_ = GESceneType.kMinInvalidScene;
 		private GESceneType curScene_ = GESceneType.kMinInvalidScene;
 
 		public GESceneType CurScene {
@@ -90,7 +90,7 @@ namespace GFW
 			SceneManager.LoadScene (sceneName);
 		}
 
-		public void OnLoadSceneCompleted ()
+		public void OnLoadSceneCompleted (bool isFirst)
 		{
 			string sceneName = SceneManager.GetActiveScene ().name;
 			if (curScene_ == GESceneType.kMinInvalidScene ||
@@ -98,11 +98,17 @@ namespace GFW
 				curScene_ = GetSceneType (sceneName);
 			} else {
 				curScene_ = curLoadingScene_;
+
+				isFirst = curScene_ == curLoadingScene_;
 			}
 			if (IsSceneValid (curScene_)) {
 				GModalViewMgr.GetInstance ().CurViewGroup = sceneInfoMap_ [curScene_].modalViewGroup;
 				GUIViewMgr.GetInstance ().CurViewGroup = sceneInfoMap_ [curScene_].uiViewGroup;
-				InitScene_ ();
+				InitScene_ (isFirst);
+				if (!isFirst) {
+					GModalViewMgr.GetInstance ().ShowAllTopView ();
+					GModalViewMgr.GetInstance ().ShowAllTopView ();
+				}
 			} else {
 				GLogUtility.LogError ("scene is unregister! name = " + sceneName);
 			}
@@ -202,13 +208,13 @@ namespace GFW
 			return "";
 		}
 
-		void InitScene_ ()
+		void InitScene_ (bool isFirst)
 		{
 			foreach (GViewType type in (GViewType[])GViewType.GetValues(typeof(GViewType))) {
 				InitView_ (type);
 			}
 
-			InitSceneObj_ ();
+			InitSceneObj_ (isFirst);
 		}
 
 		void InitCanvas ()
@@ -224,10 +230,9 @@ namespace GFW
 				var viewRoot = GCoordUtility.CreateFullScreenUINode (canvas.gameObject, viewRootName);
 				var zOrderEnums = GViewZOrder.GetValues (typeof(GViewZOrder));
 				Array.Sort (zOrderEnums);
-				GameObject subView = null;
 				foreach (GViewZOrder zOrder in zOrderEnums) {
 					string name = GetSubViewRootName (type, zOrder);
-					subView = GCoordUtility.CreateFullScreenUINode (viewRoot, name);
+					GCoordUtility.CreateFullScreenUINode (viewRoot, name);
 				}
 			} else {
 				GLogUtility.LogError ("dont exist Canvas. scene name = "
@@ -235,7 +240,7 @@ namespace GFW
 			}
 		}
 
-		void InitSceneObj_ ()
+		void InitSceneObj_ (bool isFirst)
 		{
 			var sceneObj = GameObject.Find (sceneRootName_);
 			if (sceneObj == null) {
@@ -246,6 +251,7 @@ namespace GFW
 			if (comp == null) {
 				sceneObj.AddComponent (sceneInfoMap_ [curScene_].sceneMgrType);
 			}
+			((GSceneBase)comp).OnGStart (isFirst);
 		}
 
 		public GameObject GetViewRoot (GViewType type, GViewZOrder zOrder = GViewZOrder.kZOrder0)

@@ -3,13 +3,14 @@ using System.Collections;
 using UnityEngine.UI;
 using GFW;
 
-public class GOtherScene : MonoBehaviour
+public class GOtherScene : GSceneBase
 {
-	// Use this for initialization
-	void Start ()
+	public override void OnGStart (bool isFirst)
 	{
-		var btnChangeScene = GameObject.Find ("Button_changeScene").GetComponent<Button> ();
-		btnChangeScene.onClick.AddListener (OnPressedChangeScene);
+		if (isFirst) {
+			var btnChangeScene = GameObject.Find ("Button_changeScene").GetComponent<Button> ();
+			btnChangeScene.onClick.AddListener (OnPressedChangeScene);	
+		}
 	}
 
 	void OnPressedChangeScene ()
