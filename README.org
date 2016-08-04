@@ -100,6 +100,3 @@ UI 管理采用分层栈式结构，GViewZOrder 定义了 UI 的层，Push、Pop
 GUIViewMgr.GetInstance ().PushView (CreateBg);
 GUIViewMgr.GetInstance ().PushView (GGameStartView.CreateView, GViewZOrder.kZOrder2);
 #+END_SRC
-* 关于我
-目前我正在求职。[[https://github.com/wolfand11/AboutMe][点击了解详情]]
-https://github.com/wolfand11/AboutMe
