@@ -99,7 +99,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &604519990
 RectTransform:
   m_ObjectHideFlags: 0
@@ -465,7 +465,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1393808513
 RectTransform:
   m_ObjectHideFlags: 0
@@ -574,6 +574,18 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 22438402, guid: 7b0ca69a16e584a9e92d5655c5517e53, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 34.000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 22438402, guid: 7b0ca69a16e584a9e92d5655c5517e53, type: 2}
+      propertyPath: m_Pivot.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197674, guid: 7b0ca69a16e584a9e92d5655c5517e53, type: 2}
+      propertyPath: m_Offset.x
+      value: -34
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b0ca69a16e584a9e92d5655c5517e53, type: 2}
   m_IsPrefabParent: 0
@@ -596,7 +608,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1756946634
 RectTransform:
   m_ObjectHideFlags: 0

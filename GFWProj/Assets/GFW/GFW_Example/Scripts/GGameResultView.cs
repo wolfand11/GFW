@@ -14,6 +14,7 @@ public class GGameResultView : MonoBehaviour
 	void Start ()
 	{
 		btnPlayAgain.onClick.AddListener (OnPressedPlayAgain);
+		txtScore.text = GGameModal.GetInstance ().CurScore.ToString ();
 	}
 
 	void OnPressedPlayAgain ()

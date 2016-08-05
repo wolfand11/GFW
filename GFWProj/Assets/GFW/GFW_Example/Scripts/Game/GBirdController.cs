@@ -35,12 +35,18 @@ public class GBirdController : MonoBehaviour
 	void OnTriggerExit2D (Collider2D other)
 	{
 		if (other.gameObject.name == "middle") {
-			if (eventScore != null &&
-			    other.gameObject.transform.position.x < transform.position.x &&
-			    other != preCollider) {
-				preCollider = other;
-				eventScore ();
-			}	
+			if (eventScore != null && other != preCollider) {
+				Vector3 otherPos = other.gameObject.transform.position;
+				Vector3 birdPos = transform.position;
+
+				if (other.gameObject.transform.position.x + 28.0f < transform.position.x) {
+					GLogUtility.LogInfo ("other pos = " + otherPos.ToString ());
+					GLogUtility.LogInfo ("bird  pos = " + birdPos.ToString ());
+
+					preCollider = other;
+					eventScore ();
+				}
+			}
 		}
 
 	}

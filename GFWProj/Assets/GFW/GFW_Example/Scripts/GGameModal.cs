@@ -19,5 +19,20 @@ public class GGameModal:GSingleton<GGameModal>
 		set{ curState_ = value; }
 		get{ return curState_; }
 	}
+
+	private int curScore_;
+
+	public int CurScore {
+		set{ curScore_ = value; }
+		get{ return curScore_; }
+	}
+
+	public void Init ()
+	{			
+	}
+
+	public void Finalize ()
+	{
+	}
 }
 

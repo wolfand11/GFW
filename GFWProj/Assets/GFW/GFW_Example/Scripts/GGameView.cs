@@ -17,7 +17,6 @@ public class GGameView : MonoBehaviour,IPointerDownHandler
 	public GameObject objOtherRoot;
 	public Image imgTutorial;
 
-	private int curScore_ = 0;
 	private float birdForce_ = 2500.0f;
 	private float pipeMoveSpeed;
 
@@ -74,6 +73,8 @@ public class GGameView : MonoBehaviour,IPointerDownHandler
 		GUtility.RemoveAllChildren (objPipeRoot);
 
 		imgTutorial.gameObject.SetActive (false);
+		GGameModal.GetInstance ().CurScore = 0;
+		SetScore (0);
 		objOtherRoot.SetActive (true);
 		objBird.GetComponent<Animator> ().PlayOrStopAnimator (true);
 		objBird.GetComponent<GMoveScript> ().enabled = true;
@@ -110,10 +111,15 @@ public class GGameView : MonoBehaviour,IPointerDownHandler
 		pipeObj.GetComponent<GPipeController> ().Init (objPipeRoot, pipeMoveSpeed);
 	}
 
+	void SetScore (int score)
+	{
+		txtScore.text = "<b>SCORE: </b>" + score.ToString ();
+	}
+
 	void AddScore ()
 	{
-		curScore_ += 1;
-		txtScore.text = "<b>SCORE: </b>" + curScore_.ToString ();
+		GGameModal.GetInstance ().CurScore += 1;
+		SetScore (GGameModal.GetInstance ().CurScore);
 	}
 
 	void OnPressedPause ()
