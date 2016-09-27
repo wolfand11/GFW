@@ -1,4 +1,4 @@
-#+TITLE: GFramework for Unity developer
+#+TITLE: Game Framework for Unity developer
 #+OPTIONS: ^:{}
 #+OPTIONS: \n:t 
 #+HTML_HEAD: <link rel="stylesheet" href="http://orgmode.org/org-manual.css" type="text/css" />
